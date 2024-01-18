@@ -194,6 +194,23 @@
         }
         return image;
     }
+    async function gaussian_kernel(s = 5) {
+        var kernel = [];
+        var sum = 0;
+        for (let i = 0; i < s; i++) {
+            kernel[i] = [];
+            for (let j = 0; j < s; j++) {
+                kernel[i][j] = Math.exp(-(Math.pow(i - Math.floor(s / 2), 2) + Math.pow(j - Math.floor(s / 2), 2)));
+                sum += kernel[i][j];
+            }
+        }
+        for (let i = 0; i < s; i++) {
+            for (let j = 0; j < s; j++) {
+                kernel[i][j] /= sum;
+            }
+        }
+        return kernel;
+    }
     async function merge(color_image, edges_image) {
         var result = new ImageData(color_image.width, color_image.height);
         for (let i = 0; i < color_image.data.length; i += 4) {
