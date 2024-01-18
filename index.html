@@ -75,6 +75,9 @@
         }
         cartoon_image = await cartoonify();
         ctx.putImageData(cartoon_image, 0, 0);
+        dataUrl = canvas.toDataURL();
+        image_out = document.getElementById('output');
+        image_out.src = dataUrl;
     }
 
     function hsv2rgb(h, s, v) {
