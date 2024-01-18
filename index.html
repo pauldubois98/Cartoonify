@@ -78,8 +78,9 @@
         low_colors_image = await reduce_colors();
         white_edges_image = await detect_edges();
         black_edges_image = await invert(white_edges_image);
+        black_edges_image = await filter(black_edges_image, 50, 0, 255);
         cartoon_image = await merge(low_colors_image, black_edges_image);
-        ctx.putImageData(cartoon_image, 0, 0);
+        ctx.putImageData(black_edges_image, 0, 0);
     }
 
     function hsv2rgb(h, s, v) {
@@ -175,6 +176,21 @@
             image.data[i] = 255 - image.data[i];
             image.data[i + 1] = 255 - image.data[i + 1];
             image.data[i + 2] = 255 - image.data[i + 2];
+        }
+        return image;
+    }
+    async function filter(image, threshold = 100, low = 0, high = 255) {
+        for (let i = 0; i < image.data.length; i += 4) {
+            if (image.data[i] > threshold) {
+                image.data[i] = high;
+                image.data[i + 1] = high;
+                image.data[i + 2] = high;
+            }
+            else {
+                image.data[i] = low;
+                image.data[i + 1] = low;
+                image.data[i + 2] = low;
+            }
         }
         return image;
     }
