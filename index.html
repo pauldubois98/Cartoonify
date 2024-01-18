@@ -66,6 +66,7 @@
     // run on load
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     image_in.onload = async () => {
+        // resize image to fit canvas in reasonable size
         if (image_in.naturalWidth > image_in.naturalHeight) {
             canvas.width = Math.min(1000, image_in.naturalWidth);
             canvas.height = image_in.naturalHeight * (canvas.width / image_in.naturalWidth);
@@ -73,8 +74,10 @@
             canvas.height = Math.min(1000, image_in.naturalHeight);
             canvas.width = image_in.naturalWidth * (canvas.height / image_in.naturalHeight);
         }
+        // calculate and draw cartoon on (hidden) canvas
         cartoon_image = await cartoonify();
         ctx.putImageData(cartoon_image, 0, 0);
+        // draw cartoon on visible image element
         dataUrl = canvas.toDataURL();
         image_out = document.getElementById('output');
         image_out.src = dataUrl;
