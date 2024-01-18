@@ -76,7 +76,8 @@
         await ctx.drawImage(image_in, 0, 0, image_in.naturalWidth, image_in.naturalHeight,
             0, 0, canvas.width, canvas.height)
         low_colors_image = await reduce_colors();
-        ctx.putImageData(low_colors_image, 0, 0);
+        edges_image = await detect_edges();
+        ctx.putImageData(edges_image, 0, 0);
     }
 
     function hsv2rgb(h, s, v) {
@@ -152,18 +153,19 @@
     }
     async function detect_edges(k = 1) {
         var imagedata = await ctx.getImageData(0, 0, canvas.width, canvas.height)
-        var kernel;
-        if (k === 1) {
-            kernel = [[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]];
+        var imagedata_bis;
+        if (k == 1) {
+            var kernel = [[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]];
+            imagedata_bis = await convolve(imagedata, kernel);
         }
-        else if (k === 2) {
-            kernel = [[-1, -1, -1, -1, -1],
+        else if (k == 2) {
+            var kernel = [[-1, -1, -1, -1, -1],
             [-1, 1, 2, 1, -1],
             [-1, 2, 4, 2, -1],
             [-1, 1, 2, 1, -1],
             [-1, -1, -1, -1, -1]];
+            imagedata_bis = await convolve(imagedata, kernel);
         }
-        var imagedata_bis = await convolve(imagedata, kernel);
         return imagedata_bis;
     }
 
