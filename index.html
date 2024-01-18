@@ -44,9 +44,9 @@
 <body>
     <h1>Image to Cartoon</h1>
     <div id="buttons">
-        <input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)" style="display: none;">
+        <input type="file" accept="image/*" name="image" id="file" onchange="uploadFile(event)" style="display: none;">
         <input type="button" value="Upload" onclick="document.getElementById('file').click();" />
-        <button id="download">Download</button>
+        <button id="download" onclick="downloadImage();">Download</button>
     </div>
     <div id="images">
         <img src="test_bis.png" alt="image" id="image_in" crossorigin="anonymous">
@@ -58,10 +58,19 @@
 </body>
 
 <script>
-    function loadFile(event) {
+    function uploadFile(event) {
         image_in.src = URL.createObjectURL(event.target.files[0]);
         full_cartoonify();
     };
+    function downloadImage() {
+        dataUrl = canvas.toDataURL();
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = 'cartoon.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
 
     // run on load
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
