@@ -76,8 +76,9 @@
         await ctx.drawImage(image_in, 0, 0, image_in.naturalWidth, image_in.naturalHeight,
             0, 0, canvas.width, canvas.height)
         low_colors_image = await reduce_colors();
-        edges_image = await detect_edges();
-        ctx.putImageData(edges_image, 0, 0);
+        white_edges_image = await detect_edges();
+        black_edges_image = await invert(white_edges_image);
+        ctx.putImageData(black_edges_image, 0, 0);
     }
 
     function hsv2rgb(h, s, v) {
@@ -167,6 +168,14 @@
             imagedata_bis = await convolve(imagedata, kernel);
         }
         return imagedata_bis;
+    }
+    async function invert(image) {
+        for (let i = 0; i < image.data.length; i += 4) {
+            image.data[i] = 255 - image.data[i];
+            image.data[i + 1] = 255 - image.data[i + 1];
+            image.data[i + 2] = 255 - image.data[i + 2];
+        }
+        return image;
     }
 
 </script>
