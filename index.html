@@ -34,11 +34,6 @@
             width: 100%;
         }
 
-        button {
-            margin-top: 3em;
-            cursor: pointer;
-        }
-
         #canvas {
             /* border: 1px solid black; */
             display: none;
@@ -48,14 +43,14 @@
 
 <body>
     <h1>Image to Cartoon</h1>
-    <div id="images">
-        <img src="test_bis.png" alt="image" id="image_in" crossorigin="anonymous">
-        <img src="test_bis.png" alt="image" id="output" crossorigin="anonymous">
-    </div>
     <div id="buttons">
         <input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)" style="display: none;">
         <input type="button" value="Upload" onclick="document.getElementById('file').click();" />
         <button id="download">Download</button>
+    </div>
+    <div id="images">
+        <img src="test_bis.png" alt="image" id="image_in" crossorigin="anonymous">
+        <img src="test_bis.png" alt="image" id="output" crossorigin="anonymous">
     </div>
 
     <canvas id="canvas" width="500" height="500"></canvas>
@@ -63,7 +58,6 @@
 </body>
 
 <script>
-
     function loadFile(event) {
         image_in.src = URL.createObjectURL(event.target.files[0]);
         full_cartoonify();
