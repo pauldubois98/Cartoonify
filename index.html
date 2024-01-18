@@ -53,7 +53,8 @@
         <img src="test_bis.png" alt="image" id="output" crossorigin="anonymous">
     </div>
     <div id="buttons">
-        <button id="upload">Upload</button>
+        <input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)" style="display: none;">
+        <input type="button" value="Upload" onclick="document.getElementById('file').click();" />
         <button id="download">Download</button>
     </div>
 
