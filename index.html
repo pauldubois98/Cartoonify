@@ -81,6 +81,8 @@
         black_edges_image = await filter(black_edges_image, 50, 0, 255);
         black_edges_image = await blur(black_edges_image, 5);
         black_edges_image = await filter(black_edges_image, 128, 0, 255);
+        black_edges_image = await blur(black_edges_image, 5);
+        black_edges_image = await filter(black_edges_image, 200, 0, 255);
         cartoon_image = await merge(low_colors_image, black_edges_image);
         ctx.putImageData(black_edges_image, 0, 0);
     }
