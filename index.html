@@ -63,7 +63,7 @@
 
 <script>
 
-    // run on load:
+    // run on load
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     image_in.onload = async () => {
         if (image_in.naturalWidth > image_in.naturalHeight) {
@@ -89,7 +89,6 @@
 
     async function reduce_colors(n1 = 8, n2 = 4, n3 = 4) {
         var imagedata = await ctx.getImageData(0, 0, canvas.width, canvas.height)
-        // imagedata = ctx.getImageData(0, 0, 1, 1)
         let k1 = 360 / n1;
         let k2 = 1 / n2;
         let k3 = 256 / n3;
@@ -115,7 +114,6 @@
 
     async function convolve(image, kernel) {
         var result = new ImageData(image.width, image.height);
-        //   var result = await new ImageData(50, 50);
         var w = image.width;
         var h = image.height;
         var kw = kernel.length;
