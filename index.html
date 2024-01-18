@@ -63,6 +63,22 @@
 
 <script>
 
+    // run on load:
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    image_in.onload = async () => {
+        if (image_in.naturalWidth > image_in.naturalHeight) {
+            canvas.width = Math.min(1000, image_in.naturalWidth);
+            canvas.height = image_in.naturalHeight * (canvas.width / image_in.naturalWidth);
+        } else {
+            canvas.height = Math.min(1000, image_in.naturalHeight);
+            canvas.width = image_in.naturalWidth * (canvas.height / image_in.naturalHeight);
+        }
+        await ctx.drawImage(image_in, 0, 0, image_in.naturalWidth, image_in.naturalHeight,
+            0, 0, canvas.width, canvas.height)
+        low_colors_image = await reduce_colors();
+        ctx.putImageData(low_colors_image, 0, 0);
+    }
+
     function hsv2rgb(h, s, v) {
         let f = (n, k = (n + h / 60) % 6) => v - v * s * Math.max(Math.min(k, 4 - k, 1), 0);
         return [f(5), f(3), f(1)];
