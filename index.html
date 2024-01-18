@@ -98,6 +98,42 @@
         return imagedata;
     }
 
+    async function convolve(image, kernel) {
+        var result = new ImageData(image.width, image.height);
+        //   var result = await new ImageData(50, 50);
+        var w = image.width;
+        var h = image.height;
+        var kw = kernel.length;
+        var kh = kernel[0].length;
+        var rw = (kw - 1) / 2;
+        var rh = (kh - 1) / 2;
+        for (var y = 0; y < h; y++) {
+            for (var x = 0; x < w; x++) {
+                var sum = 0;
+                for (var ky = 0; ky < kh; ky++) {
+                    for (var kx = 0; kx < kw; kx++) {
+                        if (x + kx - rw < 0 || x + kx - rw >= w) continue;
+                        if (y + ky - rh < 0 || y + ky - rh >= h) continue;
+                        const pos = (y + ky - rh) * w + (x + kx - rw);
+                        const val =
+                            (image.data[pos * 4] +
+                                image.data[pos * 4 + 1] +
+                                image.data[pos * 4 + 2]) /
+                            3;
+                        const kval = kernel[ky][kx];
+                        sum += val * kval;
+                    }
+                }
+                sum = Math.floor(sum);
+                result.data[(y * w + x) * 4] = sum;
+                result.data[(y * w + x) * 4 + 1] = sum;
+                result.data[(y * w + x) * 4 + 2] = sum;
+                result.data[(y * w + x) * 4 + 3] = 255;
+            }
+        }
+        return result;
+    }
+
 </script>
 
 </html>
