@@ -65,7 +65,8 @@
 
     // run on load
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
-    image_in.onload = async () => {
+    image_in.onload = full_cartoonify;
+    async function full_cartoonify() {
         // resize image to fit canvas in reasonable size
         if (image_in.naturalWidth > image_in.naturalHeight) {
             canvas.width = Math.min(1000, image_in.naturalWidth);
