@@ -73,6 +73,31 @@
         return [60 * (h < 0 ? h + 6 : h), v && c / v, v];
     }
 
+    async function reduce_colors(n1 = 8, n2 = 4, n3 = 4) {
+        var imagedata = await ctx.getImageData(0, 0, canvas.width, canvas.height)
+        // imagedata = ctx.getImageData(0, 0, 1, 1)
+        for (let i = 0; i < imagedata.data.length; i += 4) {
+            let r = imagedata.data[i];
+            let g = imagedata.data[i + 1];
+            let b = imagedata.data[i + 2];
+            let [h, s, v] = rgb2hsv(r, g, b);
+            let k = 360 / n1;
+            let h2 = k * Math.floor(h / k) + (k / 2);
+            k = 1 / n2;
+            let s2 = k * Math.floor(s / k) + (k / 2);
+            k = 256 / n3;
+            let v2 = k * Math.floor(v / k) + (k / 2);
+            let [r2, g2, b2] = hsv2rgb(h2, s2, v2);
+            r2 = Math.floor(r2);
+            g2 = Math.floor(g2);
+            b2 = Math.floor(b2);
+            imagedata.data[i] = r2;
+            imagedata.data[i + 1] = g2;
+            imagedata.data[i + 2] = b2;
+        }
+        return imagedata;
+    }
+
 </script>
 
 </html>
