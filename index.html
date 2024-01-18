@@ -211,6 +211,11 @@
         }
         return kernel;
     }
+    async function blur(image, s = 3) {
+        var kernel = await gaussian_kernel(s);
+        var image_bis = await convolve(image, kernel);
+        return image_bis;
+    }
     async function merge(color_image, edges_image) {
         var result = new ImageData(color_image.width, color_image.height);
         for (let i = 0; i < color_image.data.length; i += 4) {
