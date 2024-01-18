@@ -75,14 +75,19 @@
         }
         await ctx.drawImage(image_in, 0, 0, image_in.naturalWidth, image_in.naturalHeight,
             0, 0, canvas.width, canvas.height)
+        // fewer colors
         low_colors_image = await reduce_colors();
+        // edges
         white_edges_image = await detect_edges();
         black_edges_image = await invert(white_edges_image);
         black_edges_image = await filter(black_edges_image, 50, 0, 255);
+        // erode
         black_edges_image = await blur(black_edges_image, 5);
         black_edges_image = await filter(black_edges_image, 128, 0, 255);
+        // dilate
         black_edges_image = await blur(black_edges_image, 5);
         black_edges_image = await filter(black_edges_image, 200, 0, 255);
+        // merge
         cartoon_image = await merge(low_colors_image, black_edges_image);
         ctx.putImageData(black_edges_image, 0, 0);
     }
