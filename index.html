@@ -105,8 +105,7 @@
         return [60 * (h < 0 ? h + 6 : h), v && c / v, v];
     }
 
-    async function reduce_colors(n1 = 8, n2 = 4, n3 = 4) {
-        var imagedata = await ctx.getImageData(0, 0, canvas.width, canvas.height)
+    async function reduce_colors(imagedata, n1 = 8, n2 = 4, n3 = 4) {
         let k1 = 360 / n1;
         let k2 = 1 / n2;
         let k3 = 256 / n3;
@@ -282,8 +281,10 @@
     async function cartoonify() {
         await ctx.drawImage(image_in, 0, 0, image_in.naturalWidth, image_in.naturalHeight,
             0, 0, canvas.width, canvas.height)
+        imagedata = await ctx.getImageData(0, 0, canvas.width, canvas.height)
         // fewer colors
-        low_colors_image = await reduce_colors();
+        imagedata_blur = await blur(imagedata, Math.floor(imagedata.width / 100), false);
+        low_colors_image = await reduce_colors(imagedata_blur);
         // edges
         white_edges_image = await detect_edges();
         black_edges_image = await invert(white_edges_image);
