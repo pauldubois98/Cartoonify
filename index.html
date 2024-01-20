@@ -302,7 +302,7 @@
         }
         return result;
     }
-    async function erosion(image, kernel) {
+    async function erosion(image, kernel, threshold = -1) {
         var result = new ImageData(image.width, image.height);
         var w = image.width;
         var h = image.height;
@@ -310,6 +310,9 @@
         var kh = kernel[0].length;
         var rw = Math.floor((kw - 1) / 2);
         var rh = Math.floor((kh - 1) / 2);
+        if (threshold == -1) {
+            threshold = Math.floor(kernel.length / 2);
+        }
         for (var y = 0; y < h; y++) {
             for (var x = 0; x < w; x++) {
                 var count1 = 0;
@@ -329,7 +332,7 @@
                     }
                 }
                 const pos = (y * w) + x;
-                if (count1 == 0) {
+                if (count0 > threshold) {
                     result.data[pos * 4] = 0;
                     result.data[pos * 4 + 1] = 0;
                     result.data[pos * 4 + 2] = 0;
