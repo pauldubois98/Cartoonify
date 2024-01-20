@@ -259,9 +259,14 @@
         }
         return kernel;
     }
-    async function blur(image, s = 3) {
+    async function blur(image, s = 3, greyscale = true) {
         var kernel = await gaussian_kernel(s);
-        var image_bis = await convolve(image, kernel);
+        if (greyscale) {
+            var image_bis = await convolve(image, kernel);
+        }
+        else {
+            var image_bis = await convolve3(image, kernel);
+        }
         return image_bis;
     }
     async function merge(color_image, edges_image) {
