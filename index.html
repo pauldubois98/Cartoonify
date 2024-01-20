@@ -63,6 +63,21 @@
         </div>
         <div class="column">
             <img src="test_bis.png" alt="output_image" id="output" crossorigin="anonymous">
+            <fieldset>
+                <legend>Output</legend>
+                <input type="radio" id="original" name="output_image" onchange="display(original_image);">
+                <label for="original">Original</label>
+                <input type="radio" id="blured" name="output_image" onchange="display(blured_image);">
+                <label for="original">Blured</label>
+                <input type="radio" id="few_colors" name="output_image" onchange="display(low_colors_image);">
+                <label for="few_colors">Reduce colors</label>
+                <input type="radio" id="grey_scale" name="output_image" onchange="display(greyscale_image);">
+                <label for="grey_scale">Greyscale</label>
+                <input type="radio" id="edges" name="output_image" onchange="display(black_edges_image);">
+                <label for="edges">Edges</label>
+                <input type="radio" id="cartoon" name="output_image" onchange="display(cartoon_image);" checked>
+                <label for="cartoon">Cartoon</label>
+            </fieldset>
         </div>
     </div>
     <canvas id="canvas" width="500" height="500"></canvas>
