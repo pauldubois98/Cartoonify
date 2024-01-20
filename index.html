@@ -331,14 +331,16 @@
     async function cartoonify() {
         await ctx.drawImage(image_in, 0, 0, image_in.naturalWidth, image_in.naturalHeight,
             0, 0, canvas.width, canvas.height)
-        imagedata = await ctx.getImageData(0, 0, canvas.width, canvas.height)
+        original_image = await ctx.getImageData(0, 0, canvas.width, canvas.height)
         // fewer colors
-        imagedata_blur = await blur3(imagedata, Math.floor(imagedata.width / 100));
-        low_colors_image = await reduce_colors(imagedata_blur);
+        blured_image = await blur3(original_image, Math.floor(original_image.width / 100));
+        low_colors_image = await reduce_colors(blured_image);
         // edges
-        white_edges_image = await detect_edges(imagedata);
+        greyscale_image = await greyscale(original_image);
+        white_edges_image = await detect_edges(greyscale_image);
         black_edges_image = await invert(white_edges_image);
-        black_edges_image = await absolute_threshold(black_edges_image, 50, 0, 255);
+        // black_edges_image = await absolute_threshold(black_edges_image, 128);
+        black_edges_image = await adaptive_threshold(black_edges_image, Math.floor(original_image.width / 100));
         // erode
         black_edges_image = await blur(black_edges_image, 5);
         black_edges_image = await absolute_threshold(black_edges_image, 128, 0, 255);
