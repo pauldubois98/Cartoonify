@@ -76,6 +76,9 @@
                 <label for="grey_scale">Greyscale</label>
                 <input type="radio" id="edges" name="output_image" onchange="display(black_edges_image);">
                 <label for="edges">Edges</label>
+                <input type="radio" id="edges_thresholded" name="output_image"
+                    onchange="display(black_edges_thresholded_image);">
+                <label for="edges_thresholded">Edges Thresholded</label>
                 <input type="radio" id="cartoon" name="output_image" onchange="display(cartoon_image);" checked>
                 <label for="cartoon">Cartoon</label>
             </fieldset>
@@ -92,6 +95,7 @@
     var greyscale_image;
     var white_edges_image;
     var black_edges_image;
+    var black_edges_thresholded_image;
     var cartoon_image;
     function uploadFile(event) {
         image_in.src = URL.createObjectURL(event.target.files[0]);
@@ -378,10 +382,10 @@
         greyscale_image = await greyscale(original_image);
         white_edges_image = await detect_edges(greyscale_image);
         black_edges_image = await invert(white_edges_image);
-        // black_edges_image = await absolute_threshold(black_edges_image, 128);
-        black_edges_image = await adaptive_threshold(black_edges_image, Math.floor(original_image.width / 100));
+        // black_edges_thresholded_image = await absolute_threshold(black_edges_image, 128);
+        black_edges_thresholded_image = await adaptive_threshold(black_edges_image, Math.floor(original_image.width / 100));
         // merge
-        cartoon_image = await merge(low_colors_image, black_edges_image);
+        cartoon_image = await merge(low_colors_image, black_edges_thresholded_image);
         return cartoon_image;
     }
 
