@@ -204,9 +204,27 @@
         }
         return result;
     }
-    async function detect_edges(k = 1) {
-        var imagedata = await ctx.getImageData(0, 0, canvas.width, canvas.height)
-        var imagedata_bis;
+    async function greyscale(image) {
+        var result = new ImageData(image.width, image.height);
+        var w = image.width;
+        var h = image.height;
+        var kw = kernel.length;
+        var kh = kernel[0].length;
+        var rw = (kw - 1) / 2;
+        var rh = (kh - 1) / 2;
+        for (var y = 0; y < h; y++) {
+            for (var x = 0; x < w; x++) {
+                const pos = y * w + x;
+                const val = (image.data[pos * 4] + image.data[pos * 4 + 1] + image.data[pos * 4 + 2]) / 3;
+                result.data[(y * w + x) * 4] = val;
+                result.data[(y * w + x) * 4 + 1] = val;
+                result.data[(y * w + x) * 4 + 2] = val;
+                result.data[(y * w + x) * 4 + 3] = 255;
+            }
+        }
+        return result;
+    }
+    async function detect_edges(image, k = 1) {
         if (k == 1) {
             var kernel = [[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]];
             imagedata_bis = await convolve(imagedata, kernel);
