@@ -148,11 +148,7 @@
                         if (x + kx - rw < 0 || x + kx - rw >= w) continue;
                         if (y + ky - rh < 0 || y + ky - rh >= h) continue;
                         const pos = (y + ky - rh) * w + (x + kx - rw);
-                        const val =
-                            (image.data[pos * 4] +
-                                image.data[pos * 4 + 1] +
-                                image.data[pos * 4 + 2]) /
-                            3;
+                        const val = image.data[pos * 4];
                         const kval = kernel[ky][kx];
                         sum += val * kval;
                     }
