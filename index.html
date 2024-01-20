@@ -356,12 +356,12 @@
         var kernel = await gaussian_kernel(s);
         return await convolve3(image, kernel);
     }
-    async function merge(color_image, edges_image) {
-        var result = new ImageData(color_image.width, color_image.height);
-        for (let i = 0; i < color_image.data.length; i += 4) {
-            result.data[i] = Math.min(color_image.data[i], edges_image.data[i]);
-            result.data[i + 1] = Math.min(color_image.data[i + 1], edges_image.data[i + 1]);
-            result.data[i + 2] = Math.min(color_image.data[i + 2], edges_image.data[i + 2]);
+    async function merge(image1, image2) {
+        var result = new ImageData(image1.width, image1.height);
+        for (let i = 0; i < image1.data.length; i += 4) {
+            result.data[i] = Math.min(image1.data[i], image2.data[i]);
+            result.data[i + 1] = Math.min(image1.data[i + 1], image2.data[i + 1]);
+            result.data[i + 2] = Math.min(image1.data[i + 2], image2.data[i + 2]);
             result.data[i + 3] = 255;
         }
         return result;
