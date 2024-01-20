@@ -61,6 +61,15 @@
     <div id="images">
         <div class="column">
             <img src="test_bis.png" alt="input_image" id="image_in" crossorigin="anonymous">
+            <fieldset>
+                <legend>Color Quantize</legend>
+                <input type="radio" id="hsv" name="color_quantize" value="hsv" checked>
+                <label for="hsv">HSV</label>
+                <input type="radio" id="hsl" name="color_quantize" value="hsl">
+                <label for="hsv">HSL</label>
+                <input type="radio" id="rgb" name="color_quantize" value="rgb">
+                <label for="rgb">RGB</label>
+            </fieldset>
         </div>
         <div class="column">
             <img src="test_bis.png" alt="output_image" id="output" crossorigin="anonymous">
