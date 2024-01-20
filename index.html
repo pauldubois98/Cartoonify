@@ -164,6 +164,44 @@
         }
         return result;
     }
+    async function convolve3(image, kernel) {
+        var result = new ImageData(image.width, image.height);
+        var w = image.width;
+        var h = image.height;
+        var kw = kernel.length;
+        var kh = kernel[0].length;
+        var rw = (kw - 1) / 2;
+        var rh = (kh - 1) / 2;
+        for (var y = 0; y < h; y++) {
+            for (var x = 0; x < w; x++) {
+                var sum1 = 0;
+                var sum2 = 0;
+                var sum3 = 0;
+                for (var ky = 0; ky < kh; ky++) {
+                    for (var kx = 0; kx < kw; kx++) {
+                        if (x + kx - rw < 0 || x + kx - rw >= w) continue;
+                        if (y + ky - rh < 0 || y + ky - rh >= h) continue;
+                        const pos = (y + ky - rh) * w + (x + kx - rw);
+                        const val1 = image.data[pos * 4];
+                        const val2 = image.data[pos * 4 + 1];
+                        const val3 = image.data[pos * 4 + 2];
+                        const kval = kernel[ky][kx];
+                        sum1 += val1 * kval;
+                        sum2 += val2 * kval;
+                        sum3 += val3 * kval;
+                    }
+                }
+                sum1 = Math.floor(sum1);
+                sum2 = Math.floor(sum2);
+                sum3 = Math.floor(sum3);
+                result.data[(y * w + x) * 4] = sum1
+                result.data[(y * w + x) * 4 + 1] = sum2;
+                result.data[(y * w + x) * 4 + 2] = sum3;
+                result.data[(y * w + x) * 4 + 3] = 255;
+            }
+        }
+        return result;
+    }
     async function detect_edges(k = 1) {
         var imagedata = await ctx.getImageData(0, 0, canvas.width, canvas.height)
         var imagedata_bis;
