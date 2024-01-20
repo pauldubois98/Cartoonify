@@ -492,7 +492,7 @@
         black_edges_image = await invert(white_edges_image);
         // black_edges_thresholded_image = await absolute_threshold(black_edges_image, 128);
         black_edges_thresholded_image = await adaptive_threshold(black_edges_image, Math.floor(original_image.width / 100));
-        black_edges_thresholded_eroded_image = await erosion(black_edges_thresholded_image, circle_kernel(3));
+        black_edges_thresholded_eroded_image = await erosion(black_edges_thresholded_image, circle_kernel(1));
         // merge
         cartoon_image = await merge(low_colors_image, black_edges_thresholded_image);
         return cartoon_image;
