@@ -204,10 +204,6 @@
         var result = new ImageData(image.width, image.height);
         var w = image.width;
         var h = image.height;
-        var kw = kernel.length;
-        var kh = kernel[0].length;
-        var rw = (kw - 1) / 2;
-        var rh = (kh - 1) / 2;
         for (var y = 0; y < h; y++) {
             for (var x = 0; x < w; x++) {
                 const pos = y * w + x;
