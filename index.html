@@ -297,15 +297,13 @@
         }
         return kernel;
     }
-    async function blur(image, s = 3, greyscale = true) {
+    async function blur(image, s = 3) {
         var kernel = await gaussian_kernel(s);
-        if (greyscale) {
-            var image_bis = await convolve(image, kernel);
-        }
-        else {
-            var image_bis = await convolve3(image, kernel);
-        }
-        return image_bis;
+        return await convolve(image, kernel);
+    }
+    async function blur3(image, s = 3) {
+        var kernel = await gaussian_kernel(s);
+        return await convolve3(image, kernel);
     }
     async function merge(color_image, edges_image) {
         var result = new ImageData(color_image.width, color_image.height);
@@ -322,7 +320,7 @@
             0, 0, canvas.width, canvas.height)
         imagedata = await ctx.getImageData(0, 0, canvas.width, canvas.height)
         // fewer colors
-        imagedata_blur = await blur(imagedata, Math.floor(imagedata.width / 100), false);
+        imagedata_blur = await blur3(imagedata, Math.floor(imagedata.width / 100));
         low_colors_image = await reduce_colors(imagedata_blur);
         // edges
         white_edges_image = await detect_edges();
