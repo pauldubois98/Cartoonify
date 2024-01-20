@@ -221,9 +221,13 @@
         return result;
     }
     async function detect_edges(image, k = 1) {
+        if (k == 0) {
+            var kernel = [[0, -1, 0], [-1, 4, -1], [0, -1, 0]];
+            return await convolve(image, kernel);
+        }
         if (k == 1) {
             var kernel = [[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]];
-            imagedata_bis = await convolve(imagedata, kernel);
+            return await convolve(image, kernel);
         }
         else if (k == 2) {
             var kernel = [[-1, -1, -1, -1, -1],
@@ -231,9 +235,8 @@
             [-1, 2, 4, 2, -1],
             [-1, 1, 2, 1, -1],
             [-1, -1, -1, -1, -1]];
-            imagedata_bis = await convolve(imagedata, kernel);
+            return await convolve(image, kernel);
         }
-        return imagedata_bis;
     }
     async function invert(image) {
         for (let i = 0; i < image.data.length; i += 4) {
@@ -337,7 +340,7 @@
         imagedata_blur = await blur3(imagedata, Math.floor(imagedata.width / 100));
         low_colors_image = await reduce_colors(imagedata_blur);
         // edges
-        white_edges_image = await detect_edges();
+        white_edges_image = await detect_edges(imagedata);
         black_edges_image = await invert(white_edges_image);
         black_edges_image = await absolute_threshold(black_edges_image, 50, 0, 255);
         // erode
