@@ -138,7 +138,7 @@
         }
         // calculate & display cartoon
         await cartoonify();
-        display(cartoon_image);
+        update_display();
     }
     function display(image) {
         // draw image on hidden canvas
@@ -147,6 +147,32 @@
         dataUrl = canvas.toDataURL();
         image_out = document.getElementById('output');
         image_out.src = dataUrl;
+    }
+    function update_display() {
+        if (original.checked) {
+            display(original_image);
+        }
+        if (blured.checked) {
+            display(blured_image);
+        }
+        if (few_colors.checked) {
+            display(few_colors_image);
+        }
+        if (grey_scale.checked) {
+            display(greyscale_image);
+        }
+        if (edges.checked) {
+            display(black_edges_image);
+        }
+        if (edges_thresholded.checked) {
+            display(black_edges_thresholded_image);
+        }
+        if (edges_thresholded_eroded.checked) {
+            display(black_edges_thresholded_eroded_image);
+        }
+        if (cartoon.checked) {
+            display(cartoon_image);
+        }
     }
 
     function hsv2rgb(h, s, v) {
