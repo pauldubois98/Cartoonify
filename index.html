@@ -79,7 +79,7 @@
                 <label for="original">Original</label>
                 <input type="radio" id="blured" name="output_image" onchange="display(blured_image);">
                 <label for="blured">Blured</label>
-                <input type="radio" id="few_colors" name="output_image" onchange="display(low_colors_image);">
+                <input type="radio" id="few_colors" name="output_image" onchange="display(few_colors_image);">
                 <label for="few_colors">Reduce colors</label>
                 <input type="radio" id="grey_scale" name="output_image" onchange="display(greyscale_image);">
                 <label for="grey_scale">Greyscale</label>
@@ -103,7 +103,7 @@
 <script>
     var original_image;
     var blured_image;
-    var low_colors_image;
+    var few_colors_image;
     var greyscale_image;
     var white_edges_image;
     var black_edges_image;
@@ -520,7 +520,7 @@
         original_image = await ctx.getImageData(0, 0, canvas.width, canvas.height)
         // fewer colors
         blured_image = await blur3(original_image, Math.floor(original_image.width / 100));
-        low_colors_image = await reduce_colors(blured_image);
+        few_colors_image = await reduce_colors(blured_image);
         // edges
         greyscale_image = await greyscale(original_image);
         white_edges_image = await detect_edges(greyscale_image);
@@ -529,7 +529,7 @@
         black_edges_thresholded_image = await adaptive_threshold(black_edges_image, Math.floor(original_image.width / 100));
         black_edges_thresholded_eroded_image = await erosion(black_edges_thresholded_image, circle_kernel(1));
         // merge
-        cartoon_image = await merge(low_colors_image, black_edges_thresholded_eroded_image);
+        cartoon_image = await merge(few_colors_image, black_edges_thresholded_eroded_image);
         return cartoon_image;
     }
 
