@@ -308,24 +308,24 @@
                     for (var kx = 0; kx < kernel_size; kx++) {
                         if (x + kx - kernel_offset < 0 || x + kx - kernel_offset >= w) continue;
                         if (y + ky - kernel_offset < 0 || y + ky - kernel_offset >= h) continue;
-                        const pos = (y + ky - kernel_offset) * w + (x + kx - kernel_offset);
+                        const pos = ((y + ky - kernel_offset) * w) + (x + kx - kernel_offset);
                         const val = image.data[pos * 4];
                         sum += val;
                         count += val;
                     }
                 }
-                const pos = y * w + x;
+                const pos = (y * w) + x;
                 const val = image.data[pos * 4];
                 if (val > (sum / count) - C) {
-                    result.data[(y * w + x) * 4] = high;
-                    result.data[(y * w + x) * 4 + 1] = high;
-                    result.data[(y * w + x) * 4 + 2] = high;
-                    result.data[(y * w + x) * 4 + 3] = 255;
+                    result.data[pos * 4] = high;
+                    result.data[pos * 4 + 1] = high;
+                    result.data[pos * 4 + 2] = high;
+                    result.data[pos * 4 + 3] = 255;
                 } else {
-                    result.data[(y * w + x) * 4] = low;
-                    result.data[(y * w + x) * 4 + 1] = low;
-                    result.data[(y * w + x) * 4 + 2] = low;
-                    result.data[(y * w + x) * 4 + 3] = 255;
+                    result.data[pos * 4] = low;
+                    result.data[pos * 4 + 1] = low;
+                    result.data[pos * 4 + 2] = low;
+                    result.data[pos * 4 + 3] = 255;
                 }
             }
         }
