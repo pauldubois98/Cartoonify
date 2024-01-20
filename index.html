@@ -63,7 +63,7 @@
             <img src="test_bis.png" alt="input_image" id="image_in" crossorigin="anonymous">
             <fieldset>
                 <legend>Color Quantize</legend>
-                <input type="radio" id="hsv" name="color_quantize" value="hsv" checked>
+                <input type="radio" id="hsv" name="color_quantize" value="hsv" onchange="cartoonify();" checked>
                 <label for="hsv">HSV</label>
                 <input type="radio" id="hsl" name="color_quantize" value="hsl">
                 <label for="hsv">HSL</label>
@@ -75,21 +75,19 @@
             <img src="test_bis.png" alt="output_image" id="output" crossorigin="anonymous">
             <fieldset>
                 <legend>Output</legend>
-                <input type="radio" id="original" name="output_image" onchange="display(original_image);">
+                <input type="radio" id="original" name="output_image" onchange="update_display();">
                 <label for="original">Original</label>
-                <input type="radio" id="blured" name="output_image" onchange="display(blured_image);">
+                <input type="radio" id="blured" name="output_image" onchange="update_display();">
                 <label for="blured">Blured</label>
-                <input type="radio" id="few_colors" name="output_image" onchange="display(few_colors_image);">
+                <input type="radio" id="few_colors" name="output_image" onchange="update_display();">
                 <label for="few_colors">Reduce colors</label>
-                <input type="radio" id="grey_scale" name="output_image" onchange="display(greyscale_image);">
+                <input type="radio" id="grey_scale" name="output_image" onchange="update_display();">
                 <label for="grey_scale">Greyscale</label>
-                <input type="radio" id="edges" name="output_image" onchange="display(black_edges_image);">
+                <input type="radio" id="edges" name="output_image" onchange="update_display();">
                 <label for="edges">Edges</label>
-                <input type="radio" id="edges_thresholded" name="output_image"
-                    onchange="display(black_edges_thresholded_image);">
+                <input type="radio" id="edges_thresholded" name="output_image" onchange="update_display();">
                 <label for="edges_thresholded">Edges Thresholded</label>
-                <input type="radio" id="edges_thresholded_eroded" name="output_image"
-                    onchange="display(black_edges_thresholded_eroded_image);">
+                <input type="radio" id="edges_thresholded_eroded" name="output_image" onchange="update_display();">
                 <label for="edges_thresholded_eroded">Edges Thresholded Eroded</label>
                 <input type="radio" id="cartoon" name="output_image" onchange="display(cartoon_image);" checked>
                 <label for="cartoon">Cartoon</label>
