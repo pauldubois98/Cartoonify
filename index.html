@@ -336,6 +336,20 @@
         }
         return result;
     }
+    function circle_kernel(r = 1) {
+        var kernel = [];
+        for (let i = -r; i <= r; i++) {
+            kernel[i+r] = [];
+            for (let j = -r; j <= r; j++) {
+                if ((i * i) + (j * j) < r) {
+                    kernel[i + r][j + r] = 1
+                } else {
+                    kernel[i + r][j + r] = 0
+                }
+            }
+        }
+        return kernel;
+    }
     async function gaussian_kernel(s = 5) {
         var kernel = [];
         var sum = 0;
