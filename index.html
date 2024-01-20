@@ -12,9 +12,15 @@
         }
 
         img {
-            width: 40%em;
             max-height: 35em;
+        }
+
+        .column {
+            width: 40em;
             max-width: 45%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         #images {
@@ -52,10 +58,13 @@
         <button id="download" onclick="downloadImage();">Download</button>
     </div>
     <div id="images">
-        <img src="test_bis.png" alt="image" id="image_in" crossorigin="anonymous">
-        <img src="test_bis.png" alt="image" id="output" crossorigin="anonymous">
+        <div class="column">
+            <img src="test_bis.png" alt="input_image" id="image_in" crossorigin="anonymous">
+        </div>
+        <div class="column">
+            <img src="test_bis.png" alt="output_image" id="output" crossorigin="anonymous">
+        </div>
     </div>
-
     <canvas id="canvas" width="500" height="500"></canvas>
 
 </body>
