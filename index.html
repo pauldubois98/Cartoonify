@@ -221,9 +221,13 @@
         return result;
     }
     async function detect_edges(image, k = 1) {
+        if (k == 0) {
+            var kernel = [[0, -1, 0], [-1, 4, -1], [0, -1, 0]];
+            return await convolve(image, kernel);
+        }
         if (k == 1) {
             var kernel = [[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]];
-            imagedata_bis = await convolve(imagedata, kernel);
+            return await convolve(image, kernel);
         }
         else if (k == 2) {
             var kernel = [[-1, -1, -1, -1, -1],
@@ -231,9 +235,8 @@
             [-1, 2, 4, 2, -1],
             [-1, 1, 2, 1, -1],
             [-1, -1, -1, -1, -1]];
-            imagedata_bis = await convolve(imagedata, kernel);
+            return await convolve(image, kernel);
         }
-        return imagedata_bis;
     }
     async function invert(image) {
         for (let i = 0; i < image.data.length; i += 4) {
