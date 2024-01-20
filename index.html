@@ -106,14 +106,15 @@
         return [60 * (h < 0 ? h + 6 : h), v && c / v, v];
     }
 
-    async function reduce_colors(imagedata, n1 = 8, n2 = 4, n3 = 4) {
+    async function reduce_colors(image, n1 = 8, n2 = 4, n3 = 4) {
+        var result = new ImageData(image.width, image.height);
         let k1 = 360 / n1;
         let k2 = 1 / n2;
         let k3 = 256 / n3;
-        for (let i = 0; i < imagedata.data.length; i += 4) {
-            let r = imagedata.data[i];
-            let g = imagedata.data[i + 1];
-            let b = imagedata.data[i + 2];
+        for (let i = 0; i < image.data.length; i += 4) {
+            let r = image.data[i];
+            let g = image.data[i + 1];
+            let b = image.data[i + 2];
             let [h, s, v] = rgb2hsv(r, g, b);
             let k = 360 / n1;
             let h2 = k1 * Math.floor(h / k1) + (k1 / 2);
@@ -123,11 +124,12 @@
             r2 = Math.floor(r2);
             g2 = Math.floor(g2);
             b2 = Math.floor(b2);
-            imagedata.data[i] = r2;
-            imagedata.data[i + 1] = g2;
-            imagedata.data[i + 2] = b2;
+            result.data[i] = r2;
+            result.data[i + 1] = g2;
+            result.data[i + 2] = b2;
+            result.data[i + 3] = 255;
         }
-        return imagedata;
+        return result;
     }
 
     async function convolve(image, kernel) {
