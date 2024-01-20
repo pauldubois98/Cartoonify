@@ -341,12 +341,6 @@
         black_edges_image = await invert(white_edges_image);
         // black_edges_image = await absolute_threshold(black_edges_image, 128);
         black_edges_image = await adaptive_threshold(black_edges_image, Math.floor(original_image.width / 100));
-        // erode
-        black_edges_image = await blur(black_edges_image, 5);
-        black_edges_image = await absolute_threshold(black_edges_image, 128, 0, 255);
-        // dilate
-        black_edges_image = await blur(black_edges_image, 5);
-        black_edges_image = await absolute_threshold(black_edges_image, 200, 0, 255);
         // merge
         cartoon_image = await merge(low_colors_image, black_edges_image);
         return cartoon_image;
