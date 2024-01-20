@@ -227,7 +227,7 @@
         }
         return image;
     }
-    async function filter(image, threshold = 100, low = 0, high = 255) {
+    async function absolute_threshold(image, threshold = 100, low = 0, high = 255) {
         for (let i = 0; i < image.data.length; i += 4) {
             if (image.data[i] > threshold) {
                 image.data[i] = high;
@@ -289,13 +289,13 @@
         // edges
         white_edges_image = await detect_edges();
         black_edges_image = await invert(white_edges_image);
-        black_edges_image = await filter(black_edges_image, 50, 0, 255);
+        black_edges_image = await absolute_threshold(black_edges_image, 50, 0, 255);
         // erode
         black_edges_image = await blur(black_edges_image, 5);
-        black_edges_image = await filter(black_edges_image, 128, 0, 255);
+        black_edges_image = await absolute_threshold(black_edges_image, 128, 0, 255);
         // dilate
         black_edges_image = await blur(black_edges_image, 5);
-        black_edges_image = await filter(black_edges_image, 200, 0, 255);
+        black_edges_image = await absolute_threshold(black_edges_image, 200, 0, 255);
         // merge
         cartoon_image = await merge(low_colors_image, black_edges_image);
         return cartoon_image;
