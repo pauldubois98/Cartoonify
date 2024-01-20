@@ -79,6 +79,9 @@
                 <input type="radio" id="edges_thresholded" name="output_image"
                     onchange="display(black_edges_thresholded_image);">
                 <label for="edges_thresholded">Edges Thresholded</label>
+                <input type="radio" id="edges_thresholded_eroded" name="output_image"
+                    onchange="display(black_edges_thresholded_eroded_image);">
+                <label for="edges_thresholded_eroded">Edges Thresholded Eroded</label>
                 <input type="radio" id="cartoon" name="output_image" onchange="display(cartoon_image);" checked>
                 <label for="cartoon">Cartoon</label>
             </fieldset>
@@ -96,6 +99,7 @@
     var white_edges_image;
     var black_edges_image;
     var black_edges_thresholded_image;
+    var black_edges_thresholded_eroded_image;
     var cartoon_image;
     function uploadFile(event) {
         image_in.src = URL.createObjectURL(event.target.files[0]);
@@ -256,6 +260,48 @@
         }
         return result;
     }
+    async function dilation(image, kernel) {
+        var result = new ImageData(image.width, image.height);
+        var w = image.width;
+        var h = image.height;
+        var kw = kernel.length;
+        var kh = kernel[0].length;
+        var rw = Math.floor((kw - 1) / 2);
+        var rh = Math.floor((kh - 1) / 2);
+        for (var y = 0; y < h; y++) {
+            for (var x = 0; x < w; x++) {
+                var count1 = 0;
+                var count0 = 0;
+                for (var ky = 0; ky < kh; ky++) {
+                    for (var kx = 0; kx < kw; kx++) {
+                        if (x + kx - rw < 0 || x + kx - rw >= w) continue;
+                        if (y + ky - rh < 0 || y + ky - rh >= h) continue;
+                        if (kernel[ky][kx] == 0) continue;
+                        const pos = ((y + ky - rh) * w) + (x + kx - rw);
+                        const val = image.data[pos * 4];
+                        if (val > 128) {
+                            count1 += 1;
+                        } else {
+                            count0 += 1;
+                        }
+                    }
+                }
+                const pos = (y * w) + x;
+                if (count0 > 0) {
+                    result.data[pos * 4] = 0;
+                    result.data[pos * 4 + 1] = 0;
+                    result.data[pos * 4 + 2] = 0;
+                    result.data[pos * 4 + 3] = 255;
+                } else {
+                    result.data[pos * 4] = 255;
+                    result.data[pos * 4 + 1] = 255;
+                    result.data[pos * 4 + 2] = 255;
+                    result.data[pos * 4 + 3] = 255;
+                }
+            }
+        }
+        return result;
+    }
     async function detect_edges(image, k = 1) {
         if (k == 0) {
             var kernel = [[0, -1, 0], [-1, 4, -1], [0, -1, 0]];
@@ -339,7 +385,7 @@
     function circle_kernel(r = 1) {
         var kernel = [];
         for (let i = -r; i <= r; i++) {
-            kernel[i+r] = [];
+            kernel[i + r] = [];
             for (let j = -r; j <= r; j++) {
                 if ((i * i) + (j * j) < r) {
                     kernel[i + r][j + r] = 1
@@ -398,6 +444,7 @@
         black_edges_image = await invert(white_edges_image);
         // black_edges_thresholded_image = await absolute_threshold(black_edges_image, 128);
         black_edges_thresholded_image = await adaptive_threshold(black_edges_image, Math.floor(original_image.width / 100));
+        black_edges_thresholded_eroded_image = await erosion(black_edges_thresholded_image, circle_kernel(3));
         // merge
         cartoon_image = await merge(low_colors_image, black_edges_thresholded_image);
         return cartoon_image;
