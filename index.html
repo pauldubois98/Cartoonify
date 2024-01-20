@@ -182,6 +182,11 @@
         let h = c && ((v == r) ? (g - b) / c : ((v == g) ? 2 + (b - r) / c : 4 + (r - g) / c));
         return [60 * (h < 0 ? h + 6 : h), v && c / v, v];
     }
+    function rgb2hsl(r, g, b) {
+        let v = Math.max(r, g, b), c = v - Math.min(r, g, b), f = (1 - Math.abs(v + v - c - 1));
+        let h = c && ((v == r) ? (g - b) / c : ((v == g) ? 2 + (b - r) / c : 4 + (r - g) / c));
+        return [60 * (h < 0 ? h + 6 : h), f ? c / f : 0, (v + v - c) / 2];
+    }
 
     async function reduce_colors(image, n1 = 8, n2 = 4, n3 = 4) {
         var result = new ImageData(image.width, image.height);
