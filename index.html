@@ -103,10 +103,14 @@
             canvas.height = Math.min(1000, image_in.naturalHeight);
             canvas.width = image_in.naturalWidth * (canvas.height / image_in.naturalHeight);
         }
-        // calculate and draw cartoon on (hidden) canvas
-        cartoon_image = await cartoonify();
-        ctx.putImageData(cartoon_image, 0, 0);
-        // draw cartoon on visible image element
+        // calculate & display cartoon
+        await cartoonify();
+        display(cartoon_image);
+    }
+    function display(image) {
+        // draw image on hidden canvas
+        ctx.putImageData(image, 0, 0);
+        // draw image on visible image element
         dataUrl = canvas.toDataURL();
         image_out = document.getElementById('output');
         image_out.src = dataUrl;
