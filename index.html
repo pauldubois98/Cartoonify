@@ -158,7 +158,7 @@
 
     // run on load
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
-    image_in.onload = function () {
+    image_in.onload = async function () {
         // resize image to fit canvas in reasonable size
         if (image_in.naturalWidth > image_in.naturalHeight) {
             canvas.width = Math.min(1000, image_in.naturalWidth);
@@ -167,6 +167,9 @@
             canvas.height = Math.min(1000, image_in.naturalHeight);
             canvas.width = image_in.naturalWidth * (canvas.height / image_in.naturalHeight);
         }
+        // draw picture
+        await ctx.drawImage(image_in, 0, 0, image_in.naturalWidth, image_in.naturalHeight,
+            0, 0, canvas.width, canvas.height)
         // cartoonify
         full_cartoonify();
     };
@@ -564,8 +567,6 @@
         return result;
     }
     async function cartoonify() {
-        await ctx.drawImage(image_in, 0, 0, image_in.naturalWidth, image_in.naturalHeight,
-            0, 0, canvas.width, canvas.height)
         original_image = await ctx.getImageData(0, 0, canvas.width, canvas.height)
         // fewer colors
         blured_image = await blur3(original_image, Math.floor(original_image.width / 100));
