@@ -137,7 +137,7 @@
     var original_image;
     var blured_image;
     var few_colors_image;
-    var greyscale_image;
+    var grey_scale_image;
     var white_edges_image;
     var black_edges_image;
     var black_edges_thresholded_image;
@@ -196,7 +196,7 @@
             display(few_colors_image);
         }
         if (grey_scale.checked) {
-            display(greyscale_image);
+            display(grey_scale_image);
         }
         if (edges.checked) {
             display(black_edges_image);
@@ -585,8 +585,8 @@
             }
         }
         if (edges) {
-            greyscale_image = await greyscale(original_image);
-            white_edges_image = await detect_edges(greyscale_image);
+            grey_scale_image = await greyscale(original_image);
+            white_edges_image = await detect_edges(grey_scale_image);
             black_edges_image = await invert(white_edges_image);
             // black_edges_thresholded_image = await absolute_threshold(black_edges_image, 128);
             black_edges_thresholded_image = await adaptive_threshold(black_edges_image, Math.floor(original_image.width / 100));
