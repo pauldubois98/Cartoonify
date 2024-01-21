@@ -197,7 +197,7 @@
         return [f(0), f(8), f(4)];
     }
 
-    async function reduce_colors(image, n1 = 8, n2 = 4, n3 = 4) {
+    async function reduce_colors(image, f_in = rgb2hsv, f_out = hsv2rgb, n1 = 8, n2 = 4, n3 = 4) {
         var result = new ImageData(image.width, image.height);
         let k1 = 360 / n1;
         let k2 = 1 / n2;
@@ -206,12 +206,12 @@
             let r = image.data[i];
             let g = image.data[i + 1];
             let b = image.data[i + 2];
-            let [h, s, v] = rgb2hsv(r, g, b);
+            let [h, s, v] = f_in(r, g, b);
             let k = 360 / n1;
             let h2 = k1 * Math.floor(h / k1) + (k1 / 2);
             let s2 = k2 * Math.floor(s / k2) + (k2 / 2);
             let v2 = k3 * Math.floor(v / k3) + (k3 / 2);
-            let [r2, g2, b2] = hsv2rgb(h2, s2, v2);
+            let [r2, g2, b2] = f_out(h2, s2, v2);
             r2 = Math.floor(r2);
             g2 = Math.floor(g2);
             b2 = Math.floor(b2);
