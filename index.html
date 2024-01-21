@@ -124,8 +124,7 @@
 
     // run on load
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
-    image_in.onload = full_cartoonify;
-    async function full_cartoonify() {
+    image_in.onload = function (){
         // resize image to fit canvas in reasonable size
         if (image_in.naturalWidth > image_in.naturalHeight) {
             canvas.width = Math.min(1000, image_in.naturalWidth);
@@ -134,8 +133,13 @@
             canvas.height = Math.min(1000, image_in.naturalHeight);
             canvas.width = image_in.naturalWidth * (canvas.height / image_in.naturalHeight);
         }
-        // calculate & display cartoon
+        // cartoonify
+        full_cartoonify();
+    };
+    async function full_cartoonify() {
+        // calculate cartoon
         await cartoonify();
+        // display cartoon
         update_display();
     }
     function display(image) {
