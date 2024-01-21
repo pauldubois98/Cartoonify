@@ -62,6 +62,10 @@
             width: 3em;
             margin-left: 0.2em;
         }
+
+        #thresholding_type {
+            margin-bottom: 0.5em;
+        }
     </style>
 </head>
 
@@ -103,6 +107,18 @@
                         onchange="quantize_number3.value=quantize_range3.value; full_cartoonify(true, false);">
                     <input type="number" id="quantize_number3" min="1" max="50" value="4"
                         oninput="quantize_range3.value=quantize_number3.value; full_cartoonify(true, false);">
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Edges Detection</legend>
+                <div id="thresholding_type">
+                    <input type="checkbox" id="adaptive_threshold_checkbox" onchange="full_cartoonify(false, true);"
+                        checked>
+                    <label for="adaptive_threshold_checkbox">Use adaptive thresholding</label>
+                </div>
+                <div>
+                    <input type="range" id="edges_threshold_range" min="0" max="255" value="128">
+                    <input type="number" id="edges_threshold_number" min="0" max="255" value="128">
                 </div>
             </fieldset>
         </div>
