@@ -123,6 +123,7 @@
                         oninput="edges_threshold_range.value=edges_threshold_number.value; full_cartoonify(false, true);">
                 </div>
             </fieldset>
+            <button onclick="reset();">Reset</button>
         </div>
         <div class="column">
             <img src="test_bis.png" alt="output_image" id="output" crossorigin="anonymous">
@@ -180,7 +181,8 @@
     function uploadFile(event) {
         image_in.src = URL.createObjectURL(event.target.files[0]);
         full_cartoonify();
-    };
+    }
+
     function downloadImage() {
         dataUrl = canvas.toDataURL();
         const link = document.createElement('a');
