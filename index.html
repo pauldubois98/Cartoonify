@@ -161,6 +161,22 @@
     var black_edges_thresholded_image;
     var black_edges_thresholded_eroded_image;
     var cartoon_image;
+
+    function reset() {
+        hsv_btn.checked = true;
+        quantize_number1.value = 8;
+        quantize_range1.value = 8;
+        quantize_number2.value = 4;
+        quantize_range2.value = 4;
+        quantize_number3.value = 4;
+        quantize_range3.value = 4;
+        adaptive_threshold_checkbox.checked = true;
+        edges_threshold_number.value = 128;
+        edges_threshold_range.value = 128;
+        cartoon.checked = true;
+        full_cartoonify(true, true);
+    }
+
     function uploadFile(event) {
         image_in.src = URL.createObjectURL(event.target.files[0]);
         full_cartoonify();
