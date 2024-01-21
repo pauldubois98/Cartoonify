@@ -86,16 +86,22 @@
                     <label for="rgb_btn">RGB</label>
                 </div>
                 <div>
-                    <input type="range" id="quantize_range1" min="1" max="15" onchange="">
-                    <input type="number" id="quantize_number1" min="1" max="50" onchange="">
+                    <input type="range" id="quantize_range1" min="1" max="15" value="8"
+                        onchange="quantize_number1.value=quantize_range1.value; full_cartoonify();">
+                    <input type="number" id="quantize_number1" min="1" max="50" value="8"
+                        oninput="quantize_range1.value=quantize_number1.value; full_cartoonify();">
                 </div>
                 <div>
-                    <input type="range" id="quantize_range2" min="1" max="15" onchange="">
-                    <input type="number" id="quantize_number2" min="1" max="50" onchange="">
+                    <input type="range" id="quantize_range2" min="1" max="15" value="4"
+                        onchange="quantize_number2.value=quantize_range2.value; full_cartoonify();">
+                    <input type="number" id="quantize_number2" min="1" max="50" value="4"
+                        oninput="quantize_range2.value=quantize_number2.value; full_cartoonify();">
                 </div>
                 <div>
-                    <input type="range" id="quantize_range3" min="1" max="15" onchange="">
-                    <input type="number" id="quantize_number3" min="1" max="50" onchange="">
+                    <input type="range" id="quantize_range3" min="1" max="15" value="4"
+                        onchange="quantize_number3.value=quantize_range3.value; full_cartoonify();">
+                    <input type="number" id="quantize_number3" min="1" max="50" value="4"
+                        oninput="quantize_range3.value=quantize_number3.value; full_cartoonify();">
                 </div>
             </fieldset>
         </div>
