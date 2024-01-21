@@ -604,10 +604,11 @@
             grey_scale_image = await greyscale(original_image);
             white_edges_image = await detect_edges(grey_scale_image);
             black_edges_image = await invert(white_edges_image);
+            const t = Number(edges_threshold_number.value);
             if (adaptive_threshold_checkbox.checked) {
-                black_edges_thresholded_image = await adaptive_threshold(black_edges_image, Math.floor(original_image.width / 100), 128);
+                black_edges_thresholded_image = await adaptive_threshold(black_edges_image, Math.floor(original_image.width / 100), t);
             } else {
-                black_edges_thresholded_image = await absolute_threshold(black_edges_image, 128);
+                black_edges_thresholded_image = await absolute_threshold(black_edges_image, t);
             }
             black_edges_thresholded_eroded_image = await erosion(black_edges_thresholded_image, circle_kernel(1));
         }
