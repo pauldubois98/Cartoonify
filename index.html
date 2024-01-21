@@ -566,30 +566,32 @@
         }
         return result;
     }
-    async function cartoonify() {
+    async function cartoonify(colors = true, edges = true) {
         original_image = await ctx.getImageData(0, 0, canvas.width, canvas.height)
-        // fewer colors
-        blured_image = await blur3(original_image, Math.floor(original_image.width / 100));
-        var c1 = Number(quantize_number1.value);
-        var c2 = Number(quantize_number2.value);
-        var c3 = Number(quantize_number3.value);
-        console.log(c1, c2, c3)
-        if (hsv_btn.checked) {
-            few_colors_image = await reduce_colors(blured_image, rgb2hsv, hsv2rgb, c1, c2, c3);
+        if (colors) {
+            blured_image = await blur3(original_image, Math.floor(original_image.width / 100));
+            var c1 = Number(quantize_number1.value);
+            var c2 = Number(quantize_number2.value);
+            var c3 = Number(quantize_number3.value);
+            console.log(c1, c2, c3)
+            if (hsv_btn.checked) {
+                few_colors_image = await reduce_colors(blured_image, rgb2hsv, hsv2rgb, c1, c2, c3);
+            }
+            if (hsl_btn.checked) {
+                few_colors_image = await reduce_colors(blured_image, rgb2hsl, hsl2rgb, c1, c2, c3);
+            }
+            if (rgb_btn.checked) {
+                few_colors_image = await reduce_colors(blured_image, rgb2rgb, rgb2rgb, c1, c2, c3);
+            }
         }
-        if (hsl_btn.checked) {
-            few_colors_image = await reduce_colors(blured_image, rgb2hsl, hsl2rgb, c1, c2, c3);
+        if (edges) {
+            greyscale_image = await greyscale(original_image);
+            white_edges_image = await detect_edges(greyscale_image);
+            black_edges_image = await invert(white_edges_image);
+            // black_edges_thresholded_image = await absolute_threshold(black_edges_image, 128);
+            black_edges_thresholded_image = await adaptive_threshold(black_edges_image, Math.floor(original_image.width / 100));
+            black_edges_thresholded_eroded_image = await erosion(black_edges_thresholded_image, circle_kernel(1));
         }
-        if (rgb_btn.checked) {
-            few_colors_image = await reduce_colors(blured_image, rgb2rgb, rgb2rgb, c1, c2, c3);
-        }
-        // edges
-        greyscale_image = await greyscale(original_image);
-        white_edges_image = await detect_edges(greyscale_image);
-        black_edges_image = await invert(white_edges_image);
-        // black_edges_thresholded_image = await absolute_threshold(black_edges_image, 128);
-        black_edges_thresholded_image = await adaptive_threshold(black_edges_image, Math.floor(original_image.width / 100));
-        black_edges_thresholded_eroded_image = await erosion(black_edges_thresholded_image, circle_kernel(1));
         // merge
         cartoon_image = await merge(few_colors_image, black_edges_thresholded_eroded_image);
         return cartoon_image;
