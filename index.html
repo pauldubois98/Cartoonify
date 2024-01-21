@@ -154,18 +154,18 @@
                     <label for="blured">Blured</label><br>
                     <input type="radio" id="few_colors" name="output_image" onchange="update_display();">
                     <label for="few_colors">Reduce colors</label><br>
-                    <input type="radio" id="grey_scale" name="output_image" onchange="update_display();">
-                    <label for="grey_scale">Greyscale</label>
+                    <input type="radio" id="cartoon" name="output_image" onchange="display(cartoon_image);" checked>
+                    <label for="cartoon">Cartoon</label>
                 </div>
                 <div>
+                    <input type="radio" id="grey_scale" name="output_image" onchange="update_display();">
+                    <label for="grey_scale">Greyscale</label><br>
                     <input type="radio" id="edges" name="output_image" onchange="update_display();">
                     <label for="edges">Edges</label><br>
                     <input type="radio" id="edges_thresholded" name="output_image" onchange="update_display();">
                     <label for="edges_thresholded">Edges Thresholded</label><br>
                     <input type="radio" id="edges_thresholded_eroded" name="output_image" onchange="update_display();">
-                    <label for="edges_thresholded_eroded">Edges Thresholded Eroded</label><br>
-                    <input type="radio" id="cartoon" name="output_image" onchange="display(cartoon_image);" checked>
-                    <label for="cartoon">Cartoon</label>
+                    <label for="edges_thresholded_eroded">Edges Thresholded Eroded</label>  
                 </div>
             </fieldset>
         </div>
