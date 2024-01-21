@@ -48,6 +48,20 @@
             /* border: 1px solid black; */
             display: none;
         }
+
+        #colorspace {
+            margin-bottom: 0.5em;
+        }
+
+        fieldset div {
+            display: flex;
+            align-items: center;
+        }
+
+        input[type=number] {
+            width: 3em;
+            margin-left: 0.2em;
+        }
     </style>
 </head>
 
@@ -63,12 +77,26 @@
             <img src="test_bis.png" alt="input_image" id="image_in" crossorigin="anonymous">
             <fieldset>
                 <legend>Color Quantize</legend>
-                <input type="radio" id="hsv_btn" name="color_quantize" onchange="full_cartoonify();" checked>
-                <label for="hsv_btn">HSV</label>
-                <input type="radio" id="hsl_btn" name="color_quantize" onchange="full_cartoonify();">
-                <label for="hsl_btn">HSL</label>
-                <input type="radio" id="rgb_btn" name="color_quantize" onchange="full_cartoonify();">
-                <label for="rgb_btn">RGB</label>
+                <div id="colorspace">
+                    <input type="radio" id="hsv_btn" name="color_quantize" onchange="full_cartoonify();" checked>
+                    <label for="hsv_btn">HSV</label>
+                    <input type="radio" id="hsl_btn" name="color_quantize" onchange="full_cartoonify();">
+                    <label for="hsl_btn">HSL</label>
+                    <input type="radio" id="rgb_btn" name="color_quantize" onchange="full_cartoonify();">
+                    <label for="rgb_btn">RGB</label>
+                </div>
+                <div>
+                    <input type="range" id="quantize_range1" min="1" max="15" onchange="">
+                    <input type="number" id="quantize_number1" min="1" max="50" onchange="">
+                </div>
+                <div>
+                    <input type="range" id="quantize_range2" min="1" max="15" onchange="">
+                    <input type="number" id="quantize_number2" min="1" max="50" onchange="">
+                </div>
+                <div>
+                    <input type="range" id="quantize_range3" min="1" max="15" onchange="">
+                    <input type="number" id="quantize_number3" min="1" max="50" onchange="">
+                </div>
             </fieldset>
         </div>
         <div class="column">
@@ -124,7 +152,7 @@
 
     // run on load
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
-    image_in.onload = function (){
+    image_in.onload = function () {
         // resize image to fit canvas in reasonable size
         if (image_in.naturalWidth > image_in.naturalHeight) {
             canvas.width = Math.min(1000, image_in.naturalWidth);
