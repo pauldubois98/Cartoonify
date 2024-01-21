@@ -63,12 +63,12 @@
             <img src="test_bis.png" alt="input_image" id="image_in" crossorigin="anonymous">
             <fieldset>
                 <legend>Color Quantize</legend>
-                <input type="radio" id="hsv" name="color_quantize" value="hsv" onchange="cartoonify();" checked>
-                <label for="hsv">HSV</label>
-                <input type="radio" id="hsl" name="color_quantize" value="hsl">
-                <label for="hsv">HSL</label>
-                <input type="radio" id="rgb" name="color_quantize" value="rgb">
-                <label for="rgb">RGB</label>
+                <input type="radio" id="hsv_btn" name="color_quantize" onchange="full_cartoonify();" checked>
+                <label for="hsv_btn">HSV</label>
+                <input type="radio" id="hsl_btn" name="color_quantize" onchange="full_cartoonify();">
+                <label for="hsl_btn">HSL</label>
+                <input type="radio" id="rgb_btn" name="color_quantize" onchange="full_cartoonify();">
+                <label for="rgb_btn">RGB</label>
             </fieldset>
         </div>
         <div class="column">
