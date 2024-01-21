@@ -587,9 +587,9 @@
         original_image = await ctx.getImageData(0, 0, canvas.width, canvas.height)
         if (colors) {
             blured_image = await blur3(original_image, Math.floor(original_image.width / 100));
-            var c1 = Number(quantize_number1.value);
-            var c2 = Number(quantize_number2.value);
-            var c3 = Number(quantize_number3.value);
+            const c1 = Number(quantize_number1.value);
+            const c2 = Number(quantize_number2.value);
+            const c3 = Number(quantize_number3.value);
             if (hsv_btn.checked) {
                 few_colors_image = await reduce_colors(blured_image, rgb2hsv, hsv2rgb, c1, c2, c3);
             }
