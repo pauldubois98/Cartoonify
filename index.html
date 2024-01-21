@@ -49,6 +49,10 @@
             display: none;
         }
 
+        #cartoon_settings {
+            display: flex;
+        }
+
         #colorspace {
             margin-bottom: 0.5em;
         }
@@ -66,6 +70,10 @@
         #thresholding_type {
             margin-bottom: 0.5em;
         }
+
+        #reset {
+            margin: 0.5em;
+        }
     </style>
 </head>
 
@@ -79,51 +87,53 @@
     <div id="images">
         <div class="column">
             <img src="test_bis.png" alt="input_image" id="image_in" crossorigin="anonymous">
-            <fieldset>
-                <legend>Color Quantize</legend>
-                <div id="colorspace">
-                    <input type="radio" id="hsv_btn" name="color_quantize" onchange="full_cartoonify(true, false);"
-                        checked>
-                    <label for="hsv_btn">HSV</label>
-                    <input type="radio" id="hsl_btn" name="color_quantize" onchange="full_cartoonify(true, false);">
-                    <label for="hsl_btn">HSL</label>
-                    <input type="radio" id="rgb_btn" name="color_quantize" onchange="full_cartoonify(true, false);">
-                    <label for="rgb_btn">RGB</label>
-                </div>
-                <div>
-                    <input type="range" id="quantize_range1" min="1" max="15" value="8"
-                        onchange="quantize_number1.value=quantize_range1.value; full_cartoonify(true, false);">
-                    <input type="number" id="quantize_number1" min="1" max="50" value="8"
-                        oninput="quantize_range1.value=quantize_number1.value; full_cartoonify(true, false);">
-                </div>
-                <div>
-                    <input type="range" id="quantize_range2" min="1" max="15" value="4"
-                        onchange="quantize_number2.value=quantize_range2.value; full_cartoonify(true, false);">
-                    <input type="number" id="quantize_number2" min="1" max="50" value="4"
-                        oninput="quantize_range2.value=quantize_number2.value; full_cartoonify(true, false);">
-                </div>
-                <div>
-                    <input type="range" id="quantize_range3" min="1" max="15" value="4"
-                        onchange="quantize_number3.value=quantize_range3.value; full_cartoonify(true, false);">
-                    <input type="number" id="quantize_number3" min="1" max="50" value="4"
-                        oninput="quantize_range3.value=quantize_number3.value; full_cartoonify(true, false);">
-                </div>
-            </fieldset>
-            <fieldset>
-                <legend>Edges Detection</legend>
-                <div id="thresholding_type">
-                    <input type="checkbox" id="adaptive_threshold_checkbox" onchange="full_cartoonify(false, true);"
-                        checked>
-                    <label for="adaptive_threshold_checkbox">Use adaptive thresholding</label>
-                </div>
-                <div>
-                    <input type="range" id="edges_threshold_range" min="-1" max="255" value="128"
-                        onchange="edges_threshold_number.value=edges_threshold_range.value; full_cartoonify(false, true);">
-                    <input type="number" id="edges_threshold_number" min="-1" max="255" value="128"
-                        oninput="edges_threshold_range.value=edges_threshold_number.value; full_cartoonify(false, true);">
-                </div>
-            </fieldset>
-            <button onclick="reset();">Reset</button>
+            <div id="cartoon_settings">
+                <fieldset>
+                    <legend>Color Quantize</legend>
+                    <div id="colorspace">
+                        <input type="radio" id="hsv_btn" name="color_quantize" onchange="full_cartoonify(true, false);"
+                            checked>
+                        <label for="hsv_btn">HSV</label>
+                        <input type="radio" id="hsl_btn" name="color_quantize" onchange="full_cartoonify(true, false);">
+                        <label for="hsl_btn">HSL</label>
+                        <input type="radio" id="rgb_btn" name="color_quantize" onchange="full_cartoonify(true, false);">
+                        <label for="rgb_btn">RGB</label>
+                    </div>
+                    <div>
+                        <input type="range" id="quantize_range1" min="1" max="15" value="8"
+                            onchange="quantize_number1.value=quantize_range1.value; full_cartoonify(true, false);">
+                        <input type="number" id="quantize_number1" min="1" max="50" value="8"
+                            oninput="quantize_range1.value=quantize_number1.value; full_cartoonify(true, false);">
+                    </div>
+                    <div>
+                        <input type="range" id="quantize_range2" min="1" max="15" value="4"
+                            onchange="quantize_number2.value=quantize_range2.value; full_cartoonify(true, false);">
+                        <input type="number" id="quantize_number2" min="1" max="50" value="4"
+                            oninput="quantize_range2.value=quantize_number2.value; full_cartoonify(true, false);">
+                    </div>
+                    <div>
+                        <input type="range" id="quantize_range3" min="1" max="15" value="4"
+                            onchange="quantize_number3.value=quantize_range3.value; full_cartoonify(true, false);">
+                        <input type="number" id="quantize_number3" min="1" max="50" value="4"
+                            oninput="quantize_range3.value=quantize_number3.value; full_cartoonify(true, false);">
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Edges Detection</legend>
+                    <div id="thresholding_type">
+                        <input type="checkbox" id="adaptive_threshold_checkbox" onchange="full_cartoonify(false, true);"
+                            checked>
+                        <label for="adaptive_threshold_checkbox">Use adaptive thresholding</label>
+                    </div>
+                    <div>
+                        <input type="range" id="edges_threshold_range" min="-1" max="255" value="128"
+                            onchange="edges_threshold_number.value=edges_threshold_range.value; full_cartoonify(false, true);">
+                        <input type="number" id="edges_threshold_number" min="-1" max="255" value="128"
+                            oninput="edges_threshold_range.value=edges_threshold_number.value; full_cartoonify(false, true);">
+                    </div>
+                </fieldset>
+            </div>
+            <button id="reset" onclick="reset();">Reset</button>
         </div>
         <div class="column">
             <img src="test_bis.png" alt="output_image" id="output" crossorigin="anonymous">
