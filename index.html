@@ -78,30 +78,31 @@
             <fieldset>
                 <legend>Color Quantize</legend>
                 <div id="colorspace">
-                    <input type="radio" id="hsv_btn" name="color_quantize" onchange="full_cartoonify();" checked>
+                    <input type="radio" id="hsv_btn" name="color_quantize" onchange="full_cartoonify(true, false);"
+                        checked>
                     <label for="hsv_btn">HSV</label>
-                    <input type="radio" id="hsl_btn" name="color_quantize" onchange="full_cartoonify();">
+                    <input type="radio" id="hsl_btn" name="color_quantize" onchange="full_cartoonify(true, false);">
                     <label for="hsl_btn">HSL</label>
-                    <input type="radio" id="rgb_btn" name="color_quantize" onchange="full_cartoonify();">
+                    <input type="radio" id="rgb_btn" name="color_quantize" onchange="full_cartoonify(true, false);">
                     <label for="rgb_btn">RGB</label>
                 </div>
                 <div>
                     <input type="range" id="quantize_range1" min="1" max="15" value="8"
-                        onchange="quantize_number1.value=quantize_range1.value; full_cartoonify();">
+                        onchange="quantize_number1.value=quantize_range1.value; full_cartoonify(true, false);">
                     <input type="number" id="quantize_number1" min="1" max="50" value="8"
-                        oninput="quantize_range1.value=quantize_number1.value; full_cartoonify();">
+                        oninput="quantize_range1.value=quantize_number1.value; full_cartoonify(true, false);">
                 </div>
                 <div>
                     <input type="range" id="quantize_range2" min="1" max="15" value="4"
-                        onchange="quantize_number2.value=quantize_range2.value; full_cartoonify();">
+                        onchange="quantize_number2.value=quantize_range2.value; full_cartoonify(true, false);">
                     <input type="number" id="quantize_number2" min="1" max="50" value="4"
-                        oninput="quantize_range2.value=quantize_number2.value; full_cartoonify();">
+                        oninput="quantize_range2.value=quantize_number2.value; full_cartoonify(true, false);">
                 </div>
                 <div>
                     <input type="range" id="quantize_range3" min="1" max="15" value="4"
-                        onchange="quantize_number3.value=quantize_range3.value; full_cartoonify();">
+                        onchange="quantize_number3.value=quantize_range3.value; full_cartoonify(true, false);">
                     <input type="number" id="quantize_number3" min="1" max="50" value="4"
-                        oninput="quantize_range3.value=quantize_number3.value; full_cartoonify();">
+                        oninput="quantize_range3.value=quantize_number3.value; full_cartoonify(true, false);">
                 </div>
             </fieldset>
         </div>
@@ -167,15 +168,12 @@
             canvas.height = Math.min(1000, image_in.naturalHeight);
             canvas.width = image_in.naturalWidth * (canvas.height / image_in.naturalHeight);
         }
-        // draw picture
-        await ctx.drawImage(image_in, 0, 0, image_in.naturalWidth, image_in.naturalHeight,
-            0, 0, canvas.width, canvas.height)
         // cartoonify
         full_cartoonify();
     };
-    async function full_cartoonify() {
+    async function full_cartoonify(colors = true, edges = true) {
         // calculate cartoon
-        await cartoonify();
+        await cartoonify(colors, edges);
         // display cartoon
         update_display();
     }
@@ -567,13 +565,15 @@
         return result;
     }
     async function cartoonify(colors = true, edges = true) {
+        // draw picture
+        await ctx.drawImage(image_in, 0, 0, image_in.naturalWidth, image_in.naturalHeight,
+            0, 0, canvas.width, canvas.height)
         original_image = await ctx.getImageData(0, 0, canvas.width, canvas.height)
         if (colors) {
             blured_image = await blur3(original_image, Math.floor(original_image.width / 100));
             var c1 = Number(quantize_number1.value);
             var c2 = Number(quantize_number2.value);
             var c3 = Number(quantize_number3.value);
-            console.log(c1, c2, c3)
             if (hsv_btn.checked) {
                 few_colors_image = await reduce_colors(blured_image, rgb2hsv, hsv2rgb, c1, c2, c3);
             }
