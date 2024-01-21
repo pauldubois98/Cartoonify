@@ -532,7 +532,15 @@
         original_image = await ctx.getImageData(0, 0, canvas.width, canvas.height)
         // fewer colors
         blured_image = await blur3(original_image, Math.floor(original_image.width / 100));
-        few_colors_image = await reduce_colors(blured_image);
+        if (hsv_btn.checked) {
+            few_colors_image = await reduce_colors(blured_image, rgb2hsv, hsv2rgb);
+        }
+        if (hsl_btn.checked) {
+            few_colors_image = await reduce_colors(blured_image, rgb2hsl, hsl2rgb);
+        }
+        if (rgb_btn.checked) {
+            few_colors_image = await reduce_colors(blured_image, rgb2rgb, rgb2rgb);
+        }
         // edges
         greyscale_image = await greyscale(original_image);
         white_edges_image = await detect_edges(greyscale_image);
